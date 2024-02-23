@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">
+ 
+ <aop:aspectj-autoproxy/>
+ 
+ 
+<bean name = "triangle" class="com.te.spring.aop.model.Triangle">
+	<property name="name" value="Triangle Name"> </property>
+</bean>
+<bean name = "circle" class="com.te.spring.aop.model.Circle">
+<!--<property name="name" value="Circle Name"></property> -->	
+</bean>
+
+<bean name = "shapeService" class="com.te.spring.aop.service.ShapeService" autowire="byName"/>
+<bean name = "loggingAspect" class="com.te.spring.aop.aspects.LoggingAspect"/>
+
+<aop:config>
+	<aop:aspect ref="loggingAspect">
+	<!--	<aop:pointcut id = "allData" expression = "execution(* get*())"/>-->
+	<!--	<aop:around pointcut-ref= "allData" method = "methodData" /> -->
+	<!--instead of writing the pointcut separately we can direclty call the inline ref -->
+		<aop:around pointcut ="execution(* get*())" method = "methodData" />
+		
+	</aop:aspect>
+	
+</aop:config>
+</beans>
